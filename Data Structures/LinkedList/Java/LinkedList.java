@@ -127,25 +127,44 @@ public class LinkedList<T>
         for (int i=0;ptr.getNext() != null;i++)
         {
             ptr = ptr.getNext();
-            
+
             // loop until we get the index
             if (i == index)
                 break;
         }
-        
+
         // return the value at the index
         // if user supplies out of range,
         // return last in list
         return (T) ptr.getData();
     }
 
+    // Reverses the Linked List
     public void reverse()
     {
-        System.out.println("TODO: Implement");
+        // Set the current node to the head
+        Node current = this.head;
+        // declare a node to hold the next node
+        Node next;
+        // init the prev node to null
+        Node prev = null;
 
-        // head -> 1 -> 2 -> 3 -> 4 -> tail
-        // tail <- 1 <- 2 <- 3 <- 4 <- head
-        Node ptr = this.head;
+        // while the current isn't null
+        while (current != null)
+        {
+            // set the next to current's next
+            next = current.getNext();
+            // set the current's next node to the previous
+            current.setNext(prev);
+            // set previous to current
+            prev = current;
+            // set current to next
+            current = next;
+        }
+
+        // finally set the head to the previous
+        this.head = prev;
+
     }
 
     // prints out the linked list as T->T->T
@@ -184,7 +203,7 @@ public class LinkedList<T>
 // Node structure
 class Node <T>
 {
-    
+
     private T data;     // The data of the node
     private Node next;  // The next node of current
 
