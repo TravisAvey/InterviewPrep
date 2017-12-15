@@ -1,36 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-
-// TODO: create a header and implementation file, this is getting too big.
-
-// the structure of each node
-// for the linked list
-struct Node {
-    int data;
-    struct Node *next;
-};
-
-int length(struct Node *);
-void printList(struct Node *);
-void pushFront(struct Node **, int);
-void pushBack(struct Node **, int);
-void insertAt(struct Node **, int, int);
-void error(char *);
-
-
-int main(int argc, char **argv) {
-    struct Node **linkedList;
-    linkedList = (struct Node**) malloc(sizeof(struct Node**));
-    pushFront(linkedList, 1);
-    pushFront(linkedList, 0);
-    pushFront(linkedList, 2);
-    pushBack(linkedList, 4);
-    pushBack(linkedList, 6);
-    insertAt(linkedList, 0, -1);
-    printf("Length: %i\n", length((*linkedList)));
-    printList((*linkedList));
-    return EXIT_SUCCESS;
-}
+#include "linkedList.h"
 
 // This method returns the length of the list
 // by traversing the list
