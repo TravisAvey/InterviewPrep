@@ -168,24 +168,36 @@ int popFront(struct Node **head) {
     // return the data
     return data;
 }
-
+// This method removes the last node
+// in the list, and returns that datum
 int popBack(struct Node **head) {
+    // if the head is pointing to null
     if ((*head) == NULL) {
+        // output that list is empty
         printf("List is empty\n");
+        // return a flag
         return -1;
     }
-
+    // declare pointers for traversal
     struct Node *prev, *current;
-
+    // set the current pointer to head
     current = *head;
-    prev = *head;
-    while (current != NULL) {
+    // declare var to hold the datum
+    int data;
+    // while the next is not null
+    while (current->next != NULL) {
+        // hold prev node
         prev = current;
+        // set current to next
         current = current->next;
+        // get the datum from last node
+        data = current->data;
     }
-    int data = prev->data;
+    // set the previous node's next to NULL
     prev->next = NULL;
+    // free up the memory of the current (which was last)
     free(current);
+    // return the data
     return data;
 }
 

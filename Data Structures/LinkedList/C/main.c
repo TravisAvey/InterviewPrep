@@ -20,7 +20,6 @@ int main(int argc, char **argv) {
     printf("popFront : %i\n", popFront(linkedList));
     printf("popFront : %i\n", popFront(linkedList));
     printf("popBack : %i\n", popBack(linkedList));
-    printf("popBack : %i\n", popBack(linkedList));
     printList((*linkedList));
     return EXIT_SUCCESS;
 }
