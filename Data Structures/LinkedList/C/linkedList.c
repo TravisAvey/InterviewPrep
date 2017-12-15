@@ -151,6 +151,44 @@ void insertAt(struct Node **head, int loc, int data) {
     newNode->next = current;
 }
 
+// This method removes the first node in
+// the list, and returns the value
+int popFront(struct Node **head) {
+    // if head is pointing to nothing
+    if ((*head) == NULL) {
+        // output that list is empty
+        printf("List is empty\n");
+        // return a flag that list is empty
+        return -1;
+    } 
+    // get the data from the head (dereference pointer to pointer)
+    int data = (*head)->data;
+    // set head to to the next, effectively next node is not accessable
+    *head = (*head)->next;
+    // return the data
+    return data;
+}
+
+int popBack(struct Node **head) {
+    if ((*head) == NULL) {
+        printf("List is empty\n");
+        return -1;
+    }
+
+    struct Node *prev, *current;
+
+    current = *head;
+    prev = *head;
+    while (current != NULL) {
+        prev = current;
+        current = current->next;
+    }
+    int data = prev->data;
+    prev->next = NULL;
+    free(current);
+    return data;
+}
+
 // helper method that prints out error memory
 // param: string of method for debugging purposes
 void error(char *method) {
