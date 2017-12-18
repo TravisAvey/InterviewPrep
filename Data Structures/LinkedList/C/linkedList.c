@@ -201,6 +201,42 @@ int popBack(struct Node **head) {
     return data;
 }
 
+// This method removes a specific node of the key specified
+void removeNode(struct Node **head, int key) {
+    // init an int(bool) if found
+    short found = 0;
+    // declare pointers for the previous and current
+    struct Node *prev, *current;
+    // set the current to the head
+    current = *head;
+
+    // while the next node is not the end
+    while (current->next != NULL) {
+        // if the current is the key
+        if (current->data == key) {
+            // set flag that found
+            found = 1;
+            // break from loop
+            break;
+        }
+        // save current to prev
+        prev = current;
+        // advance to next node
+        current = current->next;
+    }
+    // if key not in list
+    if (!found) {
+        // output error message
+        printf("Node with data of %i is not in the list\n", key);
+        // return from method
+        return;
+    }
+    // set the next node, skipping node to delete
+    prev->next = current->next;
+    // free the memory of current
+    free(current);
+}
+
 // helper method that prints out error memory
 // param: string of method for debugging purposes
 void error(char *method) {

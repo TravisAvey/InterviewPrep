@@ -18,6 +18,7 @@ void pushBack(struct Node **, int);
 void insertAt(struct Node **, int, int);
 int popFront(struct Node **);
 int popBack(struct Node **);
+void removeNode(struct Node **, int);
 void error(char *);
 
 
