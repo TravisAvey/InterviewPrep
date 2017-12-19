@@ -20,5 +20,8 @@ int main(int argc, char **argv) {
     puts("Trying to remove a Node with data of 7");
     removeNode(linkedList, 7);
     printList(*linkedList);
+    printf("Deleting linked list \n");
+    deleteList(linkedList);
+    printList(*linkedList);
     return EXIT_SUCCESS;
 }

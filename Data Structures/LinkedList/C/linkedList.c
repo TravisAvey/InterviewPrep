@@ -25,6 +25,12 @@ int length(struct Node *head) {
 void printList(struct Node *head) {
     // get the first node
     struct Node *current = head;
+    // if the head is pointing to NULL
+    if (head == NULL) {
+        // output info and return
+        printf("Linked List is empty\n");
+        return;
+    }
     // init a counter
     int node = 0;
     // while the current is not null
@@ -235,6 +241,25 @@ void removeNode(struct Node **head, int key) {
     prev->next = current->next;
     // free the memory of current
     free(current);
+}
+
+// This method deletes the entire linked list
+void deleteList(struct Node **head) {
+    // declare pointers to traverse list
+    struct Node *iter, *aux;
+    // set the iterator to the head
+    iter = *head;
+    // while the iterator is not pointing to NULL
+    while (iter != NULL) {
+        // set the auxillary node to the iter's next
+        aux = iter->next;
+        // free the iterator from memory
+        free (iter);
+        // set the auxillary to the iterator
+        iter = aux;
+    }
+    // finally set the head to NULL
+    *head = NULL;
 }
 
 // helper method that prints out error memory
