@@ -262,6 +262,27 @@ void deleteList(struct Node **head) {
     *head = NULL;
 }
 
+// This method reverses the linked list
+void reverse(struct Node **head) {
+    // declare pointers for traversal/reversal
+    struct Node *prev, *current, *next;
+    // point current node to the head
+    current = *head;
+    // while current node is not null
+    while (current) {
+        // point the next to current's next
+        next = current->next;
+        // set the current next as prev (first time will be null)
+        current->next = prev;
+        // point prev to current
+        prev = current;
+        // point current to next
+        current = next;
+    }
+    // finally point the head to previous
+    *head = prev;
+}
+
 // helper method that prints out error memory
 // param: string of method for debugging purposes
 void error(char *method) {

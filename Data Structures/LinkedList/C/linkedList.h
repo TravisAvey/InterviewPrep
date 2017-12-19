@@ -20,6 +20,7 @@ int popFront(struct Node **);
 int popBack(struct Node **);
 void removeNode(struct Node **, int);
 void deleteList(struct Node **);
+void reverse(struct Node **);
 void error(char *);
 
 

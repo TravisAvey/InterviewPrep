@@ -15,6 +15,11 @@ int main(int argc, char **argv) {
     insertAt(linkedList, 0, -1);
 
     printList((*linkedList));
+    puts("");
+    puts("Reversing Linked List");
+    reverse(linkedList);
+    printList(*linkedList);
+    printf("\n");
     puts("Removing Node with data of 2");
     removeNode(linkedList, 2);
     puts("Trying to remove a Node with data of 7");
