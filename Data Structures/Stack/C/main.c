@@ -14,5 +14,10 @@ int main(int argc, char **argv) {
     push(Stack, 5);
     push(Stack, 6);
     printStack(Stack);
+    printf("Top: %i\n", top(Stack));
+    printf("Pop: %i\n", pop(Stack));
+    printf("Top: %i\n", top(Stack));
+    deleteStack(Stack);
+
     return EXIT_SUCCESS;
 }
