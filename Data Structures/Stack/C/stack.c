@@ -38,15 +38,21 @@ int isFull(struct stack *Stack) {
 // pushes a new item on the stack
 void push(struct stack *Stack, int item) {
     // if the stack is full
-    if (isFull)
+    if (isFull(Stack)) {
         // call subroutine to double size of stack
-        resizeStack(Stack, 2);
+        resizeStack(Stack, DOUBLE);
+    }
     // add item to the top of the stack
     Stack->data[++Stack->top] = item;
 }
 
 // removes top item from the stack
 int pop(struct stack *Stack) {
+    // if the top position is less than half
+    if (Stack->top < (Stack->capacity / 2))
+        // resize stack to 1/2 the size
+        resizeStack(Stack, HALF);
+    // remove the top and return it
     return Stack->data[Stack->top--];
 }
 
@@ -56,9 +62,15 @@ int top(struct stack *Stack) {
 }
 
 // this method doubles the size of the stack
-void resizeStack(struct stack *Stack, int factor) {
-    // resize the capacity by the factor
-    Stack->capacity *= factor;
+void resizeStack(struct stack *Stack, enum resize r) {
+    // if caller wants to double
+    if (r ==  DOUBLE)
+        // resize the capacity by 2
+        Stack->capacity *= 2;
+    // if caller wants to half the stac
+    else if (r == HALF)
+        // resuze the capacity by half
+        Stack->capacity /= 2;
     // reallocate the memory for the new size
     Stack->data = realloc(Stack->data, Stack->capacity);
 }

@@ -4,7 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define SIZE 8
+#define SIZE 1
+
+enum resize { DOUBLE, HALF };
 
 struct stack {
     int top;
@@ -18,7 +20,7 @@ int isFull(struct stack *);
 void push(struct stack *, int);
 int pop(struct stack *);
 int top(struct stack *);
-void resizeStack(struct stack *, int);
+void resizeStack(struct stack *, enum resize);
 void deleteStack(struct stack *);
 void printStack(struct stack *);
 
