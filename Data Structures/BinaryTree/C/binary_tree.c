@@ -53,10 +53,26 @@ struct binaryTree *findRecursive(struct binaryTree *root, int data) {
     return root;
 }
 
+void preOrderTraversal(struct binaryTree *root) {
+    if (root) {
+        printf("%i ", root->data);
+        preOrderTraversal(root->left);
+        preOrderTraversal(root->right);
+    }
+}
+
 void inOrderTraversal(struct binaryTree *root) {
     if (root) {
         inOrderTraversal(root->left);
         printf("%i ", root->data);
         inOrderTraversal(root->right);
+    }
+}
+
+void postOrderTraversal(struct binaryTree *root) {
+    if (root) {
+        postOrderTraversal(root->left);
+        postOrderTraversal(root->right);
+        printf("%i ", root->data);
     }
 }
