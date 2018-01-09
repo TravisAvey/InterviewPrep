@@ -5,8 +5,8 @@
 #include <stdlib.h>
 #include <limits.h>
 
-#define EMPTY INT_MIN
-#define SIZE 8
+#define EMPTY -999
+#define SIZE 4
 
 struct Queue {
     int front, rear;
@@ -18,5 +18,8 @@ struct Queue *createQueue();
 int isEmpty(struct Queue *);
 int isFull(struct Queue *);
 int size(struct Queue *);
+void enQueue(struct Queue *, int);
+int deQueue(struct Queue *);
+void resize(struct Queue *);
 
 #endif
