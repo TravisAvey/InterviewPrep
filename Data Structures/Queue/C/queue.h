@@ -21,6 +21,5 @@ int size(struct Queue *);
 void enQueue(struct Queue *, int);
 int deQueue(struct Queue *);
 void resize(struct Queue *, float);
-void delete(struct Queue *);
 
 #endif

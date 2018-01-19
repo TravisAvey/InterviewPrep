@@ -25,5 +25,9 @@ int main(int argc, char **argv) {
     puts("");
     postOrderTraversal(bTree);
     puts("");
+    printf("find(8) %i\n", find(bTree, 8));
+    printf("find(1) %i\n", find(bTree, 1));
+    printf("max: %i\n", findMax(bTree));
+    printf("size: %i\n", size(bTree));
     return EXIT_SUCCESS;
 }

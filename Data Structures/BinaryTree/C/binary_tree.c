@@ -22,22 +22,22 @@ struct binaryTree *insert(struct binaryTree *root, int data) {
     return root;
 }
 
-struct binaryTree *find(struct binaryTree *root, int data) {
+int find(struct binaryTree *root, int data) {
     if (root == NULL){
         printf("Tree is empty\n");
-        return NULL;
+        return 0;
     }
 
     while (root) {
         if (data == root->data)
-            return root;
+            return 1;
         else if (data > root->data)
             root = root->right;
         else
             root = root->left;
     }
 
-    return NULL;
+    return 0;
 }
 
 struct binaryTree *findRecursive(struct binaryTree *root, int data) {
@@ -75,4 +75,31 @@ void postOrderTraversal(struct binaryTree *root) {
         postOrderTraversal(root->right);
         printf("%i ", root->data);
     }
+}
+
+int findMax(struct binaryTree *root) {
+    int rootVal, left, right, max = -99999;
+
+    if (root != NULL) {
+
+        rootVal = root->data;
+        left = findMax(root->left);
+        right = findMax(root->right);
+
+        if (left > right)
+            max = left;
+        else 
+            max = right;
+        if (rootVal > max)
+            max = rootVal;
+    }
+
+    return max;
+}
+
+int size(struct binaryTree *root) {
+    if (root == NULL)
+        return 0;
+    else
+        return size(root->left) + 1 + size(root->right);
 }

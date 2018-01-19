@@ -12,10 +12,12 @@ struct binaryTree {
 };
 
 struct binaryTree *insert(struct binaryTree *, int);
-struct binaryTree *find(struct binaryTree *, int);
+int find(struct binaryTree *, int);
 struct binaryTree *findRecursive(struct binaryTree *, int);
 void preOrderTraversal(struct binaryTree *);
 void inOrderTraversal(struct binaryTree *);
 void postOrderTraversal(struct binaryTree *);
+int findMax(struct binaryTree *);
+int size(struct binaryTree *);
 
 #endif
