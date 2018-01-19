@@ -29,5 +29,6 @@ int main(int argc, char **argv) {
     printf("find(1) %i\n", find(bTree, 1));
     printf("max: %i\n", findMax(bTree));
     printf("size: %i\n", size(bTree));
+    printf("Height: %i\n", treeHeight(bTree));
     return EXIT_SUCCESS;
 }

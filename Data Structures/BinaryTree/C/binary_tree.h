@@ -19,5 +19,6 @@ void inOrderTraversal(struct binaryTree *);
 void postOrderTraversal(struct binaryTree *);
 int findMax(struct binaryTree *);
 int size(struct binaryTree *);
+int treeHeight(struct binaryTree *);
 
 #endif

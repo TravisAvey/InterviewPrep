@@ -101,5 +101,20 @@ int size(struct binaryTree *root) {
     if (root == NULL)
         return 0;
     else
+        // we add one here for current node
         return size(root->left) + 1 + size(root->right);
+}
+
+int treeHeight(struct binaryTree *root) {
+    int left, right;
+    if (root == NULL)
+        return 0;
+    else {
+        left = treeHeight(root->left);
+        right = treeHeight(root->right);
+        if (left > right)
+            return left + 1;
+        else
+            return right + 1;
+    }
 }
