@@ -9,4 +9,12 @@ struct heap {
 };
 
 struct heap *initHeap(int, int);
+int parent(struct heap *, int);
+int leftChild(struct heap *, int);
+int rightChild(struct heap *, int);
+int getMax(struct heap *);
+void percolateDown(struct heap *, int);
+int deleteMax(struct heap *);
+void resizeHeap(struct heap *);
+void insert(struct heap *, int);
 #endif
