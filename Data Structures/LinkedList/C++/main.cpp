@@ -19,5 +19,10 @@ int main(int argc, char **argv) {
     list.display();
     if (!list.empty())
       printf("is not empty!\n");
+    list.pushBack(0);
+    printf("Size of Linked List %i\n", list.size());
+    list.display();
+    std::cout << "popBack " << list.popBack() << std::endl;
+    list.display(); 
     return 0;
 }

@@ -40,7 +40,64 @@ LinkedList<T>::LinkedList() {
 
 template <class T>
 LinkedList<T>::~LinkedList() {
-    
+  delete head;    
+}
+
+/*
+  This method removes the last
+  item from the list and returns it
+*/
+template <class T>
+T LinkedList<T>::popBack() {
+  // TODO: add check if head == nullptr, throw error
+
+  // create nodes for traversal
+  Node *prev, *current;
+  // point prev to the head
+  prev = head;
+  // point current to prev's next
+  current = prev->next;
+  // loop while the next node isn't the end
+  while (current->next != nullptr) {
+    // move prev to current
+    prev = current;
+    // move current to the next
+    current = current->next;
+  }
+  // store the data in var
+  T item = current->data;
+  // point the prev->next to null
+  // removing the last node
+  prev->next = nullptr;
+  // free memory
+  delete current;
+  // decrement the counter
+  N--;
+  // return the item
+  return item;
+}
+
+/*
+  This method pushes the new item
+  to the back of the list
+*/
+template <class T>
+void LinkedList<T>::pushBack(T item) {
+  // point a traversal pointer at head
+  Node *prev = head;
+  // init the new node
+  Node *node = new Node;
+  // set it's data
+  node->data = item;
+  // while the next isn't null
+  while (prev->next != nullptr) {
+    // move to next
+    prev = prev->next;
+  }
+  // set the next node
+  prev->next = node;
+  // increment counter
+  N++;
 }
 
 /*
@@ -54,6 +111,7 @@ T LinkedList<T>::popFront() {
     // set head to head's next
     // effectively removing first node
     head = head->next;
+    N--;
     // return the item
     return item;
 }
