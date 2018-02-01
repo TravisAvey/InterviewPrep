@@ -1,7 +1,7 @@
 #ifndef __STACK_H__
 #define __STACK_H__
 
-#define SIZE 16
+#define SIZE 4
 
 #include <iostream>
 #include <stdexcept>
@@ -38,8 +38,9 @@ Stack<T>::Stack() {
 }
 
 /*
-    Destructor
-        Remove any dynamically allocated memory
+    The destructor
+        removes dynamically
+        created memory
 */
 template <class T>
 Stack<T>::~Stack() {
@@ -53,7 +54,7 @@ Stack<T>::~Stack() {
 template <class T>
 void Stack<T>::push(T item) {
     // if top is out of range
-    if (top >= size) {
+    if (top >= size - 1) {
         // call helper method to resize array
         resize();
     }
@@ -102,10 +103,19 @@ bool Stack<T>::isEmpty() const {
     return (top < 0);
 }
 
-// TODO: implement a method to double size of array
+/*
+    This method doubles the array size
+*/
 template <class T>
 void Stack<T>::resize() {
-
+    // create a new array, double the size
+    T *newArr = new T[size*2];
+    // copy over the old array to the new array
+    std::copy(data, data + std::min(size, size*2), newArr);
+    // set the pointer to the new array
+    data = newArr;
+    // double the size
+    size *= 2;
 }
 
 #endif
