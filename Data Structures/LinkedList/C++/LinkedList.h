@@ -23,8 +23,8 @@ public:
     T popFront();
     void pushBack(T);
     T popBack();
-    T front();
-    T back();
+    T front() const;
+    T back() const;
     void insert(T, int);
     void reverse();
     void display() const;    
@@ -159,6 +159,22 @@ T LinkedList<T>::valueAt(int index) const {
     return current->data;
 }
 
+template <class T>
+T LinkedList<T>::front() const {
+    if (head == nullptr)
+        throw std::out_of_range("The list is empty!");
+    
+    return head->data;
+}
+
+template <class T>
+T LinkedList<T>::back() const {
+    Node *current = head;
+    while (current->next != nullptr) {
+        current = current->next;
+    }
+    return current->data;
+}
 /*
     This method returns true if
     the Linked List is empty
