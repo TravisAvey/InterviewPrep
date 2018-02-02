@@ -116,7 +116,8 @@ void handleChoice(const char &choice, LinkedList<int> *list) {
             break;
         case '9':
             printf("reverse the list\n");
-            printf("Not yet implemented\n");
+            list->reverse();
+            list->display();
             break;
         case 'S':
         case 's': {

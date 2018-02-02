@@ -226,7 +226,29 @@ int LinkedList<T>::size() const {
 */
 template <class T>
 void LinkedList<T>::reverse() {
-  // TODO: implement this method
+  // only if head isn't pointing
+  // to a null pointer 
+  if (head != nullptr) {
+    // nodes for traversal
+    Node *prev, *current, *next;
+    // set prev to a null pointer
+    prev = nullptr;
+    // set current to head
+    current = head;
+    // as long as current isn't a nullptr
+    while (current) {
+      // set next to current's next
+      next = current->next;
+      // set current's next to prev (first will be nullptr)
+      current->next = prev;
+      // set prev to current
+      prev = current;
+      // and set current to next
+      current = next;
+    }
+    // finally set head to prev
+    head = prev;
+  }
 
 }
 
