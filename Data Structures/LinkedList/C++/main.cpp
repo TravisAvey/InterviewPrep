@@ -17,23 +17,27 @@ void menu(LinkedList<int> *list) {
 
     do {
         std::cout << "Enter a choice\n"
-                  << "1) Enter at front\n"
-                  << "2) Enter at rear\n"
-                  << "3) Remove from front\n"
-                  << "4) Remove from rear\n"
-                  << "5) Display value at front\n"
-                  << "6) Display value at rear\n"
-                  << "7) Display value at index\n"
-                  << "8) Display the list\n"
-                  << "9) Reverse the list\n"
-                  << "Q or q to quit\n";
+                  << "\t1) Enter at front\n"
+                  << "\t2) Enter at rear\n"
+                  << "\t3) Remove from front\n"
+                  << "\t4) Remove from rear\n"
+                  << "\t5) Display value at front\n"
+                  << "\t6) Display value at rear\n"
+                  << "\t7) Display value at index\n"
+                  << "\t8) Display the list\n"
+                  << "\t9) Reverse the list\n"
+                  << "\ts) Display the size of the list\n"
+                  << "Q or q to quit\n\n";
+        printf("> ");
         choice = std::getchar();
         std::cin.ignore();
         if (choice == 'q' || choice == 'Q')
             break;
-
+        std::cout << std::endl;
         handleChoice(choice, list);
-
+        std::cout << std::endl;
+        std::cout << std::endl;
+        std::cout << "================================================\n";
     } while (true);
 
 }
@@ -58,38 +62,67 @@ void handleChoice(const char &choice, LinkedList<int> *list) {
             break;
         }
         case '3': {
-            printf("removing front value\n");
-            int value = list->popFront();
-            printf("Value at front: %i\n", value);
+            if (list->size() > 0) {
+              printf("removing front value\n");
+              int value = list->popFront();
+              printf("Value from front: %i\n", value);
+            } else
+              printf("The list is empty!\n");
             break;
         }
         case '4': {
-            printf("rremoving rear value\n");
-            int value = list->popBack();
-            printf("Value at back: %i\n", value);
+            if (list->size() > 0) {
+              printf("removing back value\n");
+              int value = list->popBack();
+              printf("Value from back: %i\n", value);
+            } else
+              printf("The list is empty\n");
             break;
         }
         case '5': {
-            printf("display front value\n");
-            printf("Value at front: %i\n", list->front());
+            if (list->size() > 0) {
+              printf("Display front value\n");
+              printf("Value at front: %i\n", list->front());
+            } else
+              printf("The list is empty\n");
             break;
         }
         case '6': {
-            printf("diplay rear value\n");
-            printf("Value at back: %i\n", list->back());
+            if (list->size() > 0) {
+              printf("Display back value\n");
+              printf("Value at back: %i\n", list->back());
+            } else
+              printf("The list is empty\n");
             break;
         }
-        case '7':
-            printf("displaying value at index..\n");
+        case '7': {
+            if (list->size() > 0) {
+              printf("Enter index> ");
+              std::string value;
+              std::cin >> value;
+              std::cin.ignore();
+              int val = list->valueAt(std::stoi(value));
+              printf("Value at %i = %i\n", std::stoi(value), val);
+            } else
+              printf("The list is empty\n");
             break;
+        }
         case '8':
-            printf("displaying the list\n");
-            list->display();
+            if (list->size() > 0) {
+              printf("displaying the list\n");
+              list->display();
+            } else
+              printf("The list is empty\n");
             break;
         case '9':
             printf("reverse the list\n");
             printf("Not yet implemented\n");
             break;
+        case 'S':
+        case 's': {
+            printf("Size of LinkedList: %i\n", list->size());
+            break;
+        }
         default:
             printf("Unknown selection, please try again\n");
             break;

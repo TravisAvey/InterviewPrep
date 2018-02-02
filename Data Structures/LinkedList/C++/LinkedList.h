@@ -49,28 +49,35 @@ LinkedList<T>::~LinkedList() {
 */
 template <class T>
 T LinkedList<T>::popBack() {
-  // TODO: add check if head == nullptr, throw error
+  // if head is empty, throw error
+  if (head == nullptr)
+    throw std::out_of_range("List is empty!");
 
   // create nodes for traversal
-  Node *prev, *current;
-  // point prev to the head
-  prev = head;
-  // point current to prev's next
-  current = prev->next;
+  Node *prev = nullptr;
+  Node *current = head;
+  // init item
+  T item;
   // loop while the next node isn't the end
-  while (current->next != nullptr) {
+  while (current->next) {
     // move prev to current
     prev = current;
     // move current to the next
     current = current->next;
+    // store the item
+    item = current->data;
   }
-  // store the data in var
-  T item = current->data;
-  // point the prev->next to null
-  // removing the last node
-  prev->next = nullptr;
-  // free memory
-  delete current;
+  // if prev is not a null pointer
+  if (prev != nullptr) {
+    // point the prev->next to null
+    prev->next = nullptr;
+  // else, we didn't go through while loop
+  } else {
+    // get the data from last item in list
+    item = current->data;
+    // set the head to nullptr (now empty list)
+    head = nullptr;
+  }
   // decrement the counter
   N--;
   // return the item
@@ -83,21 +90,25 @@ T LinkedList<T>::popBack() {
 */
 template <class T>
 void LinkedList<T>::pushBack(T item) {
-  // point a traversal pointer at head
-  Node *prev = head;
-  // init the new node
   Node *node = new Node;
-  // set it's data
   node->data = item;
-  // while the next isn't null
-  while (prev->next != nullptr) {
-    // move to next
-    prev = prev->next;
+  if (head == nullptr) {
+    pushFront(item);
+  } else {
+    // point a traversal pointer at head
+    Node *current = head;
+    Node *prev;
+    // while the next isn't null
+    while (current != nullptr) {
+      prev = current;
+      // move to next
+      current = current->next;
+    }
+    // set the next node
+    prev->next = node;
+    node->next = current;
+    N++;
   }
-  // set the next node
-  prev->next = node;
-  // increment counter
-  N++;
 }
 
 /*
@@ -159,20 +170,36 @@ T LinkedList<T>::valueAt(int index) const {
     return current->data;
 }
 
+/*
+  This method returns the item in the
+  front of the list
+*/
 template <class T>
 T LinkedList<T>::front() const {
+    // if head is null pointer, empty list
     if (head == nullptr)
         throw std::out_of_range("The list is empty!");
-    
+    // return the data from first node
     return head->data;
 }
 
+/*
+  This method returns the item in
+  the back of the list
+*/
 template <class T>
 T LinkedList<T>::back() const {
+    // if head is nullptr, empyt list
+    if (head == nullptr)
+      throw std::out_of_range("The list is empty!");
+    // create a node for traversal
     Node *current = head;
+    // as long as the next node is good
     while (current->next != nullptr) {
+        // move to next node
         current = current->next;
     }
+    // return the data from the last node
     return current->data;
 }
 /*
@@ -192,6 +219,15 @@ bool LinkedList<T>::empty() const {
 template <class T>
 int LinkedList<T>::size() const {
   return N;
+}
+
+/*
+  This method reverses the linked list
+*/
+template <class T>
+void LinkedList<T>::reverse() {
+  // TODO: implement this method
+
 }
 
 /*
