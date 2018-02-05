@@ -19,11 +19,19 @@ private:
 public:
 
     Vector();
-    Vector(int);
-    void add(T);
-    u_int64_t length() const;
-    T &operator[](int);
+    explicit Vector(int);
 
+    void push_back(T);
+    void pop_back();
+    T front() const;
+    T back() const;
+    T at(u_int64_t) const;
+    void insert(T, u_int64_t);
+    u_int64_t size() const;
+    bool empty() const;
+    void clear();
+
+    T &operator[](int);
     friend std::ostream &operator<<(std::ostream, const Vector<T>&);
 };
 
@@ -46,7 +54,7 @@ Vector<T>::Vector(int size) {
 }
 
 template <class T>
-void Vector<T>::add(T item) {
+void Vector<T>::push_back(T item) {
     if (mLength >= mSize -1)
         resize();
 
@@ -54,7 +62,39 @@ void Vector<T>::add(T item) {
 }
 
 template <class T>
-u_int64_t Vector<T>::length() const {
+void Vector<T>::pop_back() {
+    data[mLength--] = INT64_MIN;
+}
+
+template <class T>
+T Vector<T>::front() const {
+    return data[0];
+}
+
+template <class T>
+T Vector<T>::back() const {
+    return data[mLength-1];
+}
+
+template <class T>
+T Vector<T>::at(u_int64_t index) const {
+    return data[index];
+}
+
+template <class T>
+bool Vector<T>::empty() const {
+    return mLength == 0;
+}
+
+template <class T>
+void Vector<T>::clear() {
+    mLength = 0;
+    mSize = SIZE;
+    data = new T[mSize];
+}
+
+template <class T>
+u_int64_t Vector<T>::size() const {
     return mLength;
 }
 
@@ -76,8 +116,20 @@ T &Vector<T>::operator[](int index) {
 
 template <class T>
 std::ostream &operator<<(std::ostream out, const Vector<T> &v) {
-    for (int i=0; i<v.length(); i++)
+    for (int i=0; i<v.size(); i++)
         out << v.data[i] << ' ';
     return out;
 }
+
+template<class T>
+void Vector<T>::insert(T item, u_int64_t index) {
+    if (mLength++ >= mSize)
+        resize();
+
+    for (int i=mLength-1; i>=index; i--)
+        data[i+1] = data[i];
+
+    data[index] = item;
+}
+
 #endif //__VECTOR_H__
