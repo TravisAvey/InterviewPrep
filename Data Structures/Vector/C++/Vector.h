@@ -31,7 +31,7 @@ public:
     bool empty() const;
     void clear();
 
-    T &operator[](int);
+    T &operator[](size_t);
     friend std::ostream &operator<<(std::ostream, const Vector<T>&);
 };
 
