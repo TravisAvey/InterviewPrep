@@ -10,24 +10,24 @@
 template <class T>
 class Vector {
 private:
-    const u_int64_t SIZE = 16;
-    int mSize;
+    const size_t SIZE = 16;
+    size_t mSize;
     T *data;
-    u_int64_t mLength;
+    size_t mLength;
 
     void resize();
 public:
 
     Vector();
-    explicit Vector(u_int64_t);
+    explicit Vector(size_t);
 
     void push_back(T);
     void pop_back();
     T front() const;
     T back() const;
-    T at(u_int64_t) const;
-    void insert(T, u_int64_t);
-    u_int64_t size() const;
+    T at(size_t) const;
+    void insert(T, size_t);
+    size_t size() const;
     bool empty() const;
     void clear();
 
@@ -49,7 +49,7 @@ Vector<T>::Vector() {
     Constructor with size to init with
 */
 template <class T>
-Vector<T>::Vector(u_int64_t size) {
+Vector<T>::Vector(size_t size) {
     if (size > 0) {
         data = new T[size];
         mLength = 0;
@@ -107,7 +107,7 @@ T Vector<T>::back() const {
     the index supplied by the user
 */
 template <class T>
-T Vector<T>::at(u_int64_t index) const {
+T Vector<T>::at(size_t index) const {
     return data[index];
 }
 
@@ -127,7 +127,7 @@ bool Vector<T>::empty() const {
 template <class T>
 void Vector<T>::clear() {
     // set all items to int min
-    for (int i=0; i<mLength; i++)
+    for (size_t i=0; i<mLength; i++)
         data[i] = INT64_MIN;
     // set length and size
     mLength = 0;
@@ -141,7 +141,7 @@ void Vector<T>::clear() {
     in the vector
 */
 template <class T>
-u_int64_t Vector<T>::size() const {
+size_t Vector<T>::size() const {
     return mLength;
 }
 
@@ -166,7 +166,7 @@ void Vector<T>::resize() {
     So user can use vector[index]
 */
 template <class T>
-T &Vector<T>::operator[](int index) {
+T &Vector<T>::operator[](size_t index) {
     if (index >= mSize)
         throw std::out_of_range("Out of range");
 
@@ -189,13 +189,13 @@ std::ostream &operator<<(std::ostream out, const Vector<T> &v) {
     supplied
 */
 template<class T>
-void Vector<T>::insert(T item, u_int64_t index) {
+void Vector<T>::insert(T item, size_t index) {
     // if greater than, resize array
     if (mLength++ >= mSize)
         resize();
     
     // shift everything over to the right from index supplied
-    for (int i=mLength-1; i>=index; i--)
+    for (size_t i=mLength-1; i>=index; i--)
         data[i+1] = data[i];
     // set item to index supplied
     data[index] = item;
