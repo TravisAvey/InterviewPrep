@@ -69,6 +69,18 @@ public class HashTable<K, V> {
         // return null
         return null;
     }
+    
+    public boolean find(V value) {
+        for (Entry entry : entries) {
+          if (entry == null) continue;
+          Entry temp = entry.next;
+          while (temp != null) {
+            if (temp.equals(value)) return true;
+            temp = temp.next;
+          } 
+        }
+        return false;
+    }
 
     /**
      * This helper method gets the hash
