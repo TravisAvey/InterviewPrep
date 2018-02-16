@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 /**
  * This is the hash table implementation
  * using an array for the entries. Where
@@ -8,7 +12,7 @@
  */
 public class HashTable<K, V> {
     // the size of the entries
-    private final int SIZE = 32;
+    private final int SIZE = 4;
 
     // the entries array
     private Entry[] entries = new Entry[SIZE];
@@ -29,7 +33,7 @@ public class HashTable<K, V> {
         if (entries[hash] == null)
             // store entry in hash location
             entries[hash] = entry;
-        // otherwise the loc isn't null
+            // otherwise the loc isn't null
         else {
             // store the entry in temp variable
             Entry temp = entries[hash];
@@ -39,13 +43,13 @@ public class HashTable<K, V> {
                 temp = temp.next;
             }
             // set the temp's next to the entry
-            temp.next = entry;
+            temp = entry;
         }
     }
 
     /**
      * This method retrieves a value from the hash table
-     * 
+     *
      * @param key to retrieve the value
      * @return the value retrieved from hash table
      */
@@ -56,36 +60,106 @@ public class HashTable<K, V> {
         if (entries[hash] != null) {
             // get the linked list of hash
             Entry temp = entries[hash];
-            
+
             // as long as keys dont match and next isn't null
-            while (!temp.key.equals(key) && temp.next != null) {
+            while (temp != null) {
+                if (temp.key.equals(key))
+                    return (V) temp.value;
                 // move to next in list
                 temp = temp.next;
             }
-            // return the value
-            return (V) temp.value;
+
         }
         // if we got here, not in table
         // return null
         return null;
     }
-    
-    public boolean find(V value) {
+
+    /**
+     * This method returns the set of keys
+     * for each value in the hash table
+     * @return
+     */
+    public List<K> keySet() {
+        // init a new list
+        List<K> list = new ArrayList<>();
+        // loop through the entries
         for (Entry entry : entries) {
-          if (entry == null) continue;
-          Entry temp = entry.next;
-          while (temp != null) {
-            if (temp.equals(value)) return true;
-            temp = temp.next;
-          } 
+            // if the current entry isn't null
+            if (entry == null) continue;
+
+            // store current entry
+            Entry temp = entry;
+            // while temp isn't null
+            while (temp != null) {
+                // add the key to the list
+                list.add((K) temp.key);
+                // move to next entry
+                temp = temp.next;
+            }
+
         }
+        // return the list
+        return list;
+    }
+
+    /**
+     * This method determines if the key is
+     * present in the hash table
+     * @param key to find
+     * @return true if contains, false otherwise
+     */
+    public boolean containsKey(Object key) {
+        // for each entry
+        for (Entry entry : entries) {
+            // if current is null, continue
+            if (entry == null) continue;
+            // store current entry
+            Entry temp = entry;
+            // while current isn't null
+            while (temp != null) {
+                // if the current key is what
+                // we are looking for, return true
+                if (temp.key.equals(key))
+                    return true;
+                // move to next
+                temp = temp.next;
+            }
+        }
+        // got here? not in table, return false
+        return false;
+    }
+
+    /**
+     * This method searches the hash table for
+     * the value
+     * @param value to search
+     * @return true contains, false otherwise
+     */
+    public boolean contains(V value) {
+        // loop over all entries
+        for (Entry entry : entries) {
+            // if the entry is null, go to next
+            if (entry == null) continue;
+            // save entry
+            Entry temp = entry;
+            // while temp isn't null
+            while (temp != null) {
+                // check if the value is what looking for
+                // return true if it is
+                if (temp.value.equals(value)) return true;
+                // move to next entry
+                temp = temp.next;
+            }
+        }
+        // if we got here, not in hash table, return false
         return false;
     }
 
     /**
      * This helper method gets the hash
      * of the key
-     * 
+     *
      * @param key to hash
      * @return hash value of key
      */
@@ -103,13 +177,13 @@ public class HashTable<K, V> {
         // the key and value
         K key;
         V value;
-        
+
         // pointer to next
         Entry<K, V> next;
 
         /**
          * Constructor
-         * 
+         *
          * @param key the key to retrieve
          * @param value the value to store
          */
@@ -126,3 +200,4 @@ public class HashTable<K, V> {
         }
     }
 }
+
