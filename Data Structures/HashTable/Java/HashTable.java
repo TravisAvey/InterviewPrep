@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * This is the hash table implementation
@@ -38,12 +37,16 @@ public class HashTable<K, V> {
             // store the entry in temp variable
             Entry temp = entries[hash];
             // while temp isn't null
-            while (temp != null) {
+            while (temp.next != null) {
                 // go to next
                 temp = temp.next;
             }
             // set the temp's next to the entry
-            temp = entry;
+            // Issue was here *********
+            // Needed to set the next to the entry
+            // also, while loop needed to check next
+            // wasn't null !!! ***!!!
+            temp.next = entry;
         }
     }
 
@@ -165,7 +168,7 @@ public class HashTable<K, V> {
      */
     private int getHash(K key) {
         // return hash value
-        return key.hashCode() % SIZE;
+        return java.util.Objects.hash(key) % SIZE;
     }
 
     /**
