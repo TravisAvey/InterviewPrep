@@ -1,23 +1,22 @@
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Heap<T extends Comparable<T>> {
 
 
-    public enum Type {MIN, MAX};
+    public enum Type { MAX, MIN };
 
-    private final int SIZE = 16;
+    private final int SIZE = 1024;
 
-    private T data[];
+    private List<T> data;
     private int count;
-    private int capacity;
     private Type type;
 
     @SuppressWarnings("unchecked")
     public Heap() {
-        data = (T[]) new Comparable[SIZE];
-        Arrays.fill(data, -1);
+        data = new ArrayList<>(SIZE);
         count = 0;
-        type = Type.MIN;
+        type = Type.MAX;
         capacity = SIZE;
     }
 
@@ -33,20 +32,20 @@ public class Heap<T extends Comparable<T>> {
 
     public boolean isEmpty() { return count == 0; }
 
-    public boolean isFull() { return count == data.length; }
+    public boolean isFull() { return count == data.size(); }
 
-    public int parent(int index) {
-        return (index - 1) / 2;
+    private int parent(int index) {
+        return (index-1) / 2;
     }
 
-    public int leftChild(int index) {
+    private int leftChild(int index) {
         int left = 2 * index + 1;
         if (left >= count)
             return -1;
         return left;
     }
 
-    public int rightChild(int index) {
+    private int rightChild(int index) {
         int right = 2 * index + 2;
         if (right >= count)
             return -1;
@@ -56,47 +55,56 @@ public class Heap<T extends Comparable<T>> {
     public T getMax() {
         if (count == 0) return null;
         if (type == Type.MAX)
-            return data[0];
-        return data[count-1];
+            return data.get(0);
+        else {
+            T val = data.get(0);
+            for (int i=1; i<data.size(); i++)
+                if (val.compareTo(data.get(i)) < 0)
+                    val = data.get(i);
+            return val;
+        }
     }
 
     public T getMin() {
         if (count == 0) return null;
+
         if (type == Type.MIN)
-            return data[0];
-        return data[count-1];
+            return data.get(0);
+        else {
+            T val = data.get(0);
+            for (int i=1; i<data.size(); i++)
+                if (val.compareTo(data.get(i)) > 0)
+                    val = data.get(i);
+            return val;
+        }
     }
 
     public void insert(T val) {
-        if (count >= capacity-1)
-            resize();
-        this.data[++count] = val;
-        heapUp();
+        data.add(val);
+        heapify();
+        count++;
     }
 
-    private void heapUp() {
+    private void heapify() {
         int index = count;
         if (type == Type.MIN) {
-            while(data[parent(index)].compareTo(data[index]) > 0) {
+            while(data.get(parent(index)).compareTo(data.get(index)) > 0) {
                 swap(index, parent(index));
                 index = parent(index);
             }
         } else {
-            while (data[parent(index)].compareTo(data[index]) < 0) {
+            while (data.get(parent(index)).compareTo(data.get(index)) < 0) {
                 swap(index, parent(index));
                 index = parent(index);
             }
         }
     }
 
+
     private void swap(int aPos, int bPos) {
-        T temp = data[aPos];
-        data[aPos] = data[bPos];
-        data[bPos] = temp;
+        T temp = data.get(aPos);
+        data.set(aPos, data.get(bPos));
+        data.set(bPos, temp);
     }
 
-    private void resize() {
-        data = Arrays.copyOf(data, capacity*2);
-        capacity *= 2;
-    }
 }
