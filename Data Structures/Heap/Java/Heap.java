@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class Heap<T extends Comparable<T>> {
 
@@ -103,6 +104,24 @@ public class Heap<T extends Comparable<T>> {
     }
 
     /**
+     * Method removes the min or max from the heap
+     * @return the min/max value
+     */
+    public T remove() {
+        if (count == 0)
+            throw new NoSuchElementException("Heap is empty, no values to remove");
+
+        T val = heap.get(0);
+
+        heap.set(0, heap.get(count-1));
+        count--;
+        // TODO: create a percolate down method for removing
+        // the heapify doesn' work properly when removing...
+        heapify();
+        return val;
+    }
+
+    /**
      * Gets the smallest item in heap
      * @return min
      */
@@ -180,10 +199,12 @@ public class Heap<T extends Comparable<T>> {
         // else, max heap
         } else {
             // while the parent is less than the child, swap
-            while (heap.get(parent(index)).compareTo(heap.get(index)) < 0) {
+            while (index > 0 && heap.get(parent(index)).compareTo(heap.get(index)) < 0) {
+
                 swap(index, parent(index));
                 // set the index to parent
                 index = parent(index);
+
             }
         }
     }
