@@ -108,16 +108,20 @@ public class Heap<T extends Comparable<T>> {
      * @return the min/max value
      */
     public T remove() {
+        // if none in heap, throw exception
         if (count == 0)
             throw new NoSuchElementException("Heap is empty, no values to remove");
-
+        
+        // get the first value in heap
         T val = heap.get(0);
-
+        
+        // set the last item to first
         heap.set(0, heap.get(count-1));
+        // reduce the count
         count--;
-        // TODO: create a percolate down method for removing
-        // the heapify doesn' work properly when removing...
-        heapify();
+        // call method to put the min/max at pos 0
+        percolateDown();
+        // return the value
         return val;
     }
 
@@ -207,6 +211,56 @@ public class Heap<T extends Comparable<T>> {
 
             }
         }
+    }
+
+    /**
+     * This method heapifies the heap after removing
+     * an element
+     */
+    private void percolateDown() {
+        // start at 0, where we are replacing
+        // TODO: thought.. for remove(item) put i in method signature
+        int i = 0;
+        // declare child pos
+        int child;
+        // store temp value from pos i
+        T tmp = heap.get(i);
+
+        // if max heap
+        if (type == Type.MAX) {
+            // loop over the children from i
+            for (; i * 2 + 1 <= count; i = child) {
+                // set next child
+                child = i * 2 + 1;
+                // if child isn't at the count, and next child is greater than current child
+                if (child != count && heap.get(child+1).compareTo(heap.get(child)) > 0)
+                    // increment child
+                    ++child;
+                // if child is greater than, swap i with child
+                if (heap.get(child).compareTo(tmp) > 0)
+                    heap.set(i, heap.get(child));
+                else break;
+            }
+        // min heap
+        } else {
+            // loop over children
+            for (; i * 2 + 1 <= count; i=child) {
+                // move to next child
+                child = i * 2  + 1;
+                // if child isn't at count and next child is less than child
+                if (child != count && heap.get(child+1).compareTo(heap.get(child)) < 0)
+                    // increment
+                    ++child;
+                // if child is less than the temp
+                if (heap.get(child).compareTo(tmp) < 0)
+                    // set i pos to child
+                    heap.set(i, heap.get(child));
+                else break;
+            }
+        }
+        // after all, set i to temp
+        heap.set(i, tmp);
+
     }
 
     /**
