@@ -1,4 +1,4 @@
 *.out
 .vscode/settings.json
 *.gch
-*__pycache__/*
+*cpython*
