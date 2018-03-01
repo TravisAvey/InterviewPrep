@@ -4,8 +4,9 @@ Implementing various data structures, algorithms to study for the interview proc
 
 ### Following languages:
 * Java
+* C#
 * C++
-* Python (maybe)
+* Python
 
 ### Data structures:
 * Vector
@@ -13,6 +14,9 @@ Implementing various data structures, algorithms to study for the interview proc
 * Stack
 * Queue
 * Hash Table
+* Trie
+* Binary Tree
+* Heap
 
 
 ### Sorting Algorithms
@@ -53,5 +57,5 @@ Implementing various data structures, algorithms to study for the interview proc
 * state
 * memento
 * iterator
-*composite
+* composite
 * flyweight
