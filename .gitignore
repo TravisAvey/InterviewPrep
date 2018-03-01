@@ -2,4 +2,4 @@
 .vscode/settings.json
 *.gch
 *cpython*
-*/*.exe
+*.exe
