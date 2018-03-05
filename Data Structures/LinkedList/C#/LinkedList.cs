@@ -80,6 +80,23 @@ namespace DataStructures.Classes
             _head = current;
         }
 
+        /// <summary>
+        /// Pushes a new node to the end of the linked list
+        /// </summary>
+        /// <param name="data">The new node data to put at end of linked list</param>
+        public void PushBack(T data)
+        {
+            // init a pointer to the head
+            var current = _head;
+
+            // loop as long as next node isnt null
+            while (current.GetNext() != null)
+                // move to next
+                current = current.GetNext();
+            
+            // set the next node with data and the next's next node as null
+            current.SetNext(new Node<T>(data, null));
+        }
 
         /// <summary>
         /// Gets the value from the back of the list
