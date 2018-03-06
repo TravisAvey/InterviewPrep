@@ -173,8 +173,6 @@ namespace DataStructures.Classes
             var data = current.GetData();
             // set the prev's next node to null
             prev.SetNext(null);
-            // set current to null
-            current = null;
             // decrement the size of list
             _size--;
             // return the data
@@ -219,15 +217,38 @@ namespace DataStructures.Classes
         }
 
         /// <summary>
-        /// Removes the node with value passed
-        /// 
-        /// TODO: implement this method
+        /// Removes the node with the value specified
+        /// does nothing if value is not in linked list
         /// </summary>
-        /// <param name="data">The value of the node to remove</param>
-        /// <exception cref="NotImplementedException">Throws exception if not implemented</exception>
+        /// <param name="data">Value to remove</param>
+        /// <exception cref="ArgumentOutOfRangeException">Throws exception if empty</exception>
         public void Remove(T data)
         {
-            throw new NotImplementedException();
+            // if head is null, list is empty
+            if (_head == null)
+                throw new ArgumentOutOfRangeException($"Linked List is emtpy!");
+
+            // pointers to traverse list
+            var current = _head;
+            var prev = current;
+
+            // loop through list
+            while (current != null)
+            {
+                // if current has value to remove, break
+                if (current.GetData().Equals(data))
+                    break;
+
+                // set prev to the current
+                prev = current;
+                // move current to the next
+                current = current.GetNext();
+            }
+            // set the prev node's next to current's next
+            // effectively removing the current node
+            prev.SetNext(current?.GetNext());
+            current = null;
+
         }
 
         /// <summary>
@@ -272,39 +293,39 @@ namespace DataStructures.Classes
         /// This is the node class that represents
         /// each node of the linked list
         /// </summary>
-        /// <typeparam name="S">Generic Type</typeparam>
-        private class Node<S>
+        /// <typeparam name="TS">Generic Type</typeparam>
+        private class Node<TS>
         {
-            private S _data;
-            private Node<S> _next;
+            private TS _data;
+            private Node<TS> _next;
         
             public Node()
             {
                 _next = null;
             }
 
-            public Node(S data, Node<S> node)
+            public Node(TS data, Node<TS> node)
             {
                 _data = data;
                 _next = node;
             }
 
-            public void SetNext(Node<S> node)
+            public void SetNext(Node<TS> node)
             {
                 _next = node;
             }
 
-            public void SetData(S data)
+            public void SetData(TS data)
             {
                 _data = data;
             }
 
-            public Node<S> GetNext()
+            public Node<TS> GetNext()
             {
                 return _next;
             }
 
-            public S GetData()
+            public TS GetData()
             {
                 return _data;
             }
