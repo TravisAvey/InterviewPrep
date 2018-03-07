@@ -247,19 +247,40 @@ namespace DataStructures.Classes
             // set the prev node's next to current's next
             // effectively removing the current node
             prev.SetNext(current?.GetNext());
-            current = null;
-
         }
 
         /// <summary>
-        /// Reverses the Linked List
-        /// 
-        /// TODO: implement this methovalued
+        /// Reverse the Linked List
         /// </summary>
-        /// <exception cref="NotImplementedException">Throw exception until implemented</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Throws exception if Linked List is empyt</exception>
         public void Reverse()
         {
-            throw new NotImplementedException();
+            // if the head is null, list is empty
+            if (_head == null)
+                throw new ArgumentOutOfRangeException($"List is empty!");
+
+            // create a pointer to head
+            var current = _head;
+            // declare a node to hold the next
+            Node<T> next;
+            // init a prev node to null
+            Node<T> prev = null;
+
+            // while current isn't null
+            while (current != null)
+            {
+                // set the next node to current's next
+                next = current.GetNext();
+                // set current's next to prev node
+                current.SetNext(prev);
+                // point prev to current
+                prev = current;
+                // point current to next
+                current = next;
+            }
+
+            // set the head to prev
+            _head = prev;
         }
         
         /// <summary>
