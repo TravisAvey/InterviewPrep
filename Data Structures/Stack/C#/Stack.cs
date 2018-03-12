@@ -73,35 +73,60 @@ namespace DataStructures.Classes
             }
         }
 
+        /// <summary>
+        /// Removes the item from the top of the stack
+        /// </summary>
+        /// <returns>Top item from stack</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Throws exception if empty</exception>
         public T Pop()
         {
+            // if top is less than 0, then is empty
             if (mTop < 0)
                 throw new ArgumentOutOfRangeException($"Stack is empty");
             else
             {
+                // return top item and decrement the top position
                 return mStack[mTop--];
             }
         }
 
+        /// <summary>
+        /// Peeks at the top item in the stack
+        /// </summary>
+        /// <returns>Top item in the stack</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Throws exception if stack is empty</exception>
         public T Peek()
         {
+            // if top is less than 0, stack is empty
             if (mTop < 0)
                 throw new ArgumentOutOfRangeException($"Stack is empty");
             else
             {
+                // return the top item from stack
                 return mStack[mTop];
             }
         }
 
 
+        /// <summary>
+        /// Checks if the stack is empty
+        /// </summary>
+        /// <returns>true if stack is empty</returns>
         public bool IsEmpty() => mTop == -1;
 
 
+        /// <summary>
+        /// Helper method to resize the stack array
+        /// </summary>
         private void Resize()
         {
+            // double size of stack
             mSize *= 2;
+            // create temp stack, clone of stack
             T[] temp = (T[]) mStack.Clone();
+            // re-init the stack to a new array
             mStack = new T[mSize];
+            // using System, copy temp back into stack
             System.Array.Copy(mStack, temp, (mSize/2));
         }
         
