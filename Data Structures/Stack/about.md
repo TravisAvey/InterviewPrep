@@ -1,11 +1,12 @@
 # The Stack
+Last In First Out LIFO
 
 ## Uses:
 * Great for parsing. Reverse Polish Notation calculators use stacks to hold the values.
 * Evaluating postfix expressions
 * Great for tree/graph traversal.  DFS uses a stack
 
-## Access
+## Complexity
 * Access: O(n)
 * Search: O(n)
 * Insert: O(1)
