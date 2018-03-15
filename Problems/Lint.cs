@@ -9,6 +9,9 @@ namespace Solution
         /// <summary>
         /// Checks string to see if the code is valid
         /// with matching {}, (), [].. could add more checks
+        ///
+        /// Runtime: O(n), has to iterate through each char in string
+        /// Space:   O(n), if all characters are {, (, or [ plus any others..
         /// </summary>
         /// <returns>true if code is valid</returns>
         public static bool Lint(string code)
