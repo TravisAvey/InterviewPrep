@@ -112,41 +112,75 @@ namespace DataStructures.Classes
             return current.IsWord;
         }
         
+        /// <summary>
+        /// Removes a word from the Trie
+        /// 
+        /// Uses a stack to put on each node of the word
+        /// then checks each node to see if it is a word
+        /// if not, then we can safely remove the node
+        /// this keeps all other words in trie
+        /// </summary>
+        /// <param name="word">String to remove</param>
+        /// <exception cref="ArgumentNullException">Throws exception if word is empty</exception>
         public void Delete(string word)
         {
+            // Throw exception if string is empty/null
             if (String.IsNullOrEmpty(word))
                 throw new ArgumentNullException($"Word cannot be empty or null.");
 
+            // check to see if word is in Trie
             if (!Search(word))
             {
+                // ouptut error
                 Console.WriteLine("Word is not in Trie");
+                // return
                 return;
             }
 
+            // create a pointer for traversal
             Node current = root;
-
+            // create a stack to put each node in
+            // for when we actually remove the nodes
+            Stack<Node> stack = new Stack<Node>();
+            
             foreach (char ch in word)
             {
 
-
                 if (current.Children.ContainsKey(ch))
                 {
-                    current.Children.Remove(ch);
+                    stack.Push(current.Children[ch]);
                 }
                 else
                     return;
-
-                current.IsWord = false;
+                
             }
 
-
-
-
+            // remove last first first b/c checking
+            // in while loop for words
+            stack.Pop();
+            // get the length of the word
+            // minus 2 (b/c we removed the last node already)
+            int len = word.Length - 2;
+            // loop over stack and word len
+            while (!stack.IsEmpty() && len >= 0)
+            {
+                // get the current char
+                char ch = word[len];
+                // get the current node
+                Node node = stack.Pop();
+                // if this node is a word
+                // then we break out of loop
+                // .. can't remove this node
+                if (node.IsWord)
+                    break;
+                // remove this node
+                node.Children.Remove(ch);
+                // decrement word len
+                len--;
+            }
         }
     }
     
-    
-
     /// <summary>
     /// This class is used for each node of the
     /// trie.  Each of these nodes has a dictionary
