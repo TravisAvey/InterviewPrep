@@ -89,40 +89,142 @@ public class BitManipulation {
         return count;
     }
 
+    /**
+     * Without the use of operators, this method
+     * multiplies the two values
+     * @param x value
+     * @param y value
+     * @return x * y
+     */
     public static long multiply(long x, long y) {
+        // init a sum
         long sum = 0;
-
+        // while x isn't 0
         while (x != 0) {
+            // check the lowest bit isn't 0
             if ((x & 1) != 0) {
+                // add to the sum y
                 sum = add(sum, y);
             }
-
+            // shift x one bit to the right
             x >>= 1;
+            // shift y one bit to the left
             y <<= 1;
         }
 
+        // return the sum
         return sum;
     }
 
+    /**
+     * Without the use of operators, this method
+     * adds the 2 values passed
+     * @param x value
+     * @param y value
+     * @return the sum of x and y
+     */
     public static long add(long x, long y) {
+        // init sum
         long sum = 0;
+        // carry
         long carry = 0;
+        // init counter to 1
         long k = 1;
+        // init temps for x and y
         long tempX = x, tempY = y;
 
+        // while the temps arent 0
         while (tempX != 0 || tempY != 0) {
+            // and the values of x and k
             long xK = x & k;
+            // and the values of y and x
             long yK = y & k;
+            // compute the carry out
             long carryOut = (xK & yK) | (xK & carry) | (yK & carry);
 
+            // OR the values of xK, yK and carry
             sum |= (xK ^ yK ^ carry);
+            // set carry to carry out shifted 1 bit to left
             carry = carryOut << 1;
+            // shift k one bit left
             k <<= 1;
+            // shift temp vals to the right one
             tempX >>= 1;
             tempY >>= 1;
         }
 
-
+        // return the sum OR'd with carry
         return sum | carry;
+    }
+
+    /**
+     * Without the use of division/multiplication, this method
+     * divides the two values. x / y
+     * @param x numerator
+     * @param y denominator
+     * @return x / y
+     */
+    public static int divide(int x, int y) {
+        // init the result
+        int result = 0;
+        // init the power
+        int power = 32;
+        // init yPoer to y shift to the left power
+        long yPower = y << power;
+        // while x is greater than y
+        while (x >= y) {
+            // while the y power is greater than x
+            while (yPower > x) {
+                // shift yPower 1 to right
+                yPower >>= 1;
+                // decrement power
+                --power;
+            }
+
+            // add to result 1 shifted to the left by power
+            // this in reality increments result by 1 each loop
+            result += 1 << power;
+            // decrement x by yPower
+            x -= yPower;
+        }
+        // return the result of x / y
+        return result;
+    }
+
+    /**
+     * Without the use of Math.pow, this method calculates
+     * the power of x^y
+     * @param x base
+     * @param y exponent
+     * @return x ^ y
+     */
+    public static double power(double x, int y) {
+        // init result to 1
+        double result = 1.0;
+        // set power to y
+        long power = y;
+
+        // if y is negative
+        if (y < 0) {
+            // gets pos val of power
+            power = -power;
+            // invert the base
+            x = 1.0 / x;
+        }
+
+        // while power isn't 0
+        while (power != 0) {
+            // if the last bit of power isn't 0
+            if ((power & 1) != 0) {
+                // multiply result by x
+                result *= x;
+            }
+            // multiply x by x
+            x *= x;
+            // shift power to the right by 1 bit
+            power >>= 1;
+        }
+        // return result of x^y
+        return result;
     }
 }
