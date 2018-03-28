@@ -92,6 +92,10 @@ public class BitManipulation {
     /**
      * Without the use of operators, this method
      * multiplies the two values
+     * 
+     * Time Complexity: O(n^2)
+     * Because we do n number of add method, which
+     * is O(n) = n*n
      * @param x value
      * @param y value
      * @return x * y
@@ -119,6 +123,9 @@ public class BitManipulation {
     /**
      * Without the use of operators, this method
      * adds the 2 values passed
+     * 
+     * Time Complexity: O(n)
+     * 
      * @param x value
      * @param y value
      * @return the sum of x and y
@@ -160,6 +167,9 @@ public class BitManipulation {
     /**
      * Without the use of division/multiplication, this method
      * divides the two values. x / y
+     * 
+     * Time Complexity: O(n)
+     * 
      * @param x numerator
      * @param y denominator
      * @return x / y
@@ -194,6 +204,8 @@ public class BitManipulation {
     /**
      * Without the use of Math.pow, this method calculates
      * the power of x^y
+     * 
+     * Time Complexity: O(n)
      * @param x base
      * @param y exponent
      * @return x ^ y
@@ -226,5 +238,34 @@ public class BitManipulation {
         }
         // return result of x^y
         return result;
+    }
+
+    /**
+     * This method takes an integer and reverses
+     * 123 becomes 321
+     *
+     * Time Complexity: O(n)
+     *
+     * @param x int to reverse
+     * @return reversed x
+     */
+    public static long reverse(int x) {
+        // init result
+        long result = 0;
+        // get the positive value of x
+        long remaining = Math.abs(x);
+        // while remainingin isn't 0
+        while (remaining != 0) {
+            // put the result of:
+            // result x 10, which adds on zero to result
+            // add remaining modulus 10, which adds the last digit
+            result = result * 10 + remaining % 10;
+            // set remaining to next digit
+            remaining /= 10;
+        }
+
+        // here we return the result, putting back
+        // the negative sign if there was one
+        return x < 0 ? -result : result;
     }
 }
