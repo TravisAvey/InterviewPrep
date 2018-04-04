@@ -46,41 +46,81 @@ public final class Arrays {
     /**
      * Multiplies 2 lists together and product as list
      * i.e., [1,2] X [3,4] = [4,0,8]
-     * 
+     *
      * Time Complexity: O(n*m)
      *  n = length of N
      *  m = length of M
-     *  
+     *
      * @param N first list
      * @param M second list
      * @return product of N * M
      */
     public static List<Integer> multiply(List<Integer> N, List<Integer> M) {
-        
+        // store the sign of the numbers
         final int sign = N.get(0) < 0 ^ M.get(0) < 0 ? -1 : 1;
-        
+        // initially set the first digit to a positive number regardless
+        N.set(0, Math.abs(N.get(0)));
+        M.set(0, Math.abs(M.get(0)));
+        // create a list for the result to be stored in
         List<Integer> result = new ArrayList<>(Collections.nCopies(N.size() + M.size(), 0));
 
+        // loop through the lists
         for (int i=N.size()-1; i>=0; i--) {
             for (int j=M.size()-1; j>=0; j--) {
+                // this basically is doing the basic grade school multiplication
                 result.set(i + j + 1, result.get(i+j+1) + N.get(i) * M.get(j));
                 result.set(i+j, result.get(i+j) + result.get(i+j+1) / 10);
                 result.set(i+j+1, result.get(i+j+1) % 10);
             }
         }
 
+        // this is finding the position of the first non zero as there
+        // may be padding zeros at beginning of list due to multiplication
         int nonZero = 0;
         while (nonZero < result.size() && result.get(nonZero) == 0) {
             ++nonZero;
         }
-        
+
+        // set the list as a sublist of first non-zero to end
         result = result.subList(nonZero, result.size());
-        
+
+        // if empty, return 0
         if (result.isEmpty())
             return java.util.Arrays.asList(0);
-        
+
+        // now we return the result re-applying the sign
         result.set(0, result.get(0) * sign);
         return result;
     }
 
+    /**
+     * Given a list of allowable steps to take in one turn..
+     * i.e., [3,3,1,0,2,0,1]
+     * this method will determine if the player can make it
+     * to the end of the list (board game)
+     *
+     * So we start at first A[0] -> 3, so we get to move 3 steps,
+     * now we are at A[4] -> 2, so we get to move 2 steps and now at end!
+     *
+     * As opposed to [3,2,0,0,2,0,1] is not winnable
+     *
+     * Time Complexity O(n)
+     *
+     * @param steps list of steps for player
+     * @return true if player can reach end
+     */
+    public static boolean canReachEnd(List<Integer> steps) {
+        // initialize farthest: position player can go in turn
+        // and last index of list
+        int farthest = 0, lastIndex = steps.size()-1;
+
+        // loop through list as long as farthest is less than last index
+        for (int i=0; i<= farthest && farthest < lastIndex; i++) {
+            // determine which steps to take.. farthest or the next
+            farthest = Math.max(farthest, i + steps.get(i));
+        }
+
+        // return boolean based on if player won or not
+        return farthest >= lastIndex;
+    }
 }
