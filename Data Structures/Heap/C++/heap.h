@@ -31,7 +31,7 @@ private:
     int leftChild(int index) const;
     int rightChild(int index) const;
     void heapify();
-    void percolate(int index);
+    void percolate();
     void swap(int i, int j) ;
 
 
@@ -221,9 +221,9 @@ T Heap<T>::remove() {
         throw std::out_of_range("The heap is empty");
 
     T val = heap->at(0);
-    swap(0, static_cast<int>(heap->size() - 1));
+    swap(0, static_cast<int>(heap->size()-1));
     count--;
-    percolate(0);
+    percolate();
 
     return val;
 }
@@ -231,25 +231,37 @@ T Heap<T>::remove() {
 /*
  * TODO: this method not working properly..
  * After removing max, the new max is not correct..
- * 
+ *
  */
 template<class T>
-void Heap<T>::percolate(int index) {
-    int left = leftChild(index);
-    int right = rightChild(index);
-    int max;
-    if (left != -1 && heap->at(left) > heap->at(index)) {
-        max = left;
-    } else
-        max = index;
+void Heap<T>::percolate() {
+    int i = 0;
+    int child;
+    T temp = heap->at(i);
 
-    if (right != 1 && heap->at(right) > heap->at(max))
-        max = right;
-
-    if (max != index) {
-        swap(index, max);
-        percolate(max);
+    if (mType == TYPE::MAX) {
+        for (; i*2+1 <= count; i = child) {
+            child = i*2+1;
+            if (child != count && heap->at(child+1) > heap->at(child)) {
+                child++;
+            }
+            if (heap->at(child) > temp)
+                swap(i, child);
+            else break;
+        }
+    } else {
+        for (; i*2+1 <= count; i = child) {
+            child = i*2+1;
+            if (child != count && heap->at(child+1) < heap->at(child)) {
+                child++;
+            }
+            if (heap->at(child) < temp)
+                swap(i, child);
+            else break;
+        }
     }
+
+    //heap->push_back(temp);
 }
 
 /*
