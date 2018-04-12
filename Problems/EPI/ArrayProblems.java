@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public final class Arrays {
+public final class ArrayProblems {
 
     /**
      * This method takes a list of integers
@@ -122,5 +122,62 @@ public final class Arrays {
 
         // return boolean based on if player won or not
         return farthest >= lastIndex;
+    }
+
+    /**
+     * Given a list, will remove all the duplicates and will
+     * return the number of valid entries of the list
+     *
+     * Time Complexity: O(n)
+     * Space Complexity: O(1)
+     *
+     * @param A list of integers
+     * @return Number of valid entries in list
+     */
+    public static int removeDuplicates(List<Integer> A) {
+        // if list is empty, return 0
+        if (A.isEmpty())
+            return 0;
+
+        // set the index to 1
+        int index = 1;
+        // loop over list
+        for (int i=1; i<A.size(); i++) {
+            // if previous item isnt the same as current
+            if (!A.get(index -1).equals(A.get(i))) {
+                // set the index to current item and then increment index
+                A.set(index++, A.get(i));
+            }
+        }
+        // return the number valid entries in list
+        return index;
+    }
+
+    /**
+     * Variant of removeDuplicates.  This method removes
+     * the supplied key from the list.
+     *
+     * Time Complexity: O(n)
+     * Space Complexity: O(1)
+     *
+     * @param A list
+     * @param key item to remove from list
+     * @return number of valid entries in list
+     */
+    public static int removeKey(List<Integer> A, int key) {
+        // if list is empty, return 0
+        if (A.isEmpty())
+            return 0;
+        // init an index
+        int index = 0;
+        // loop through index
+        for (int i=0; i<A.size(); i++) {
+            // if the current isnt the key to remove
+            if (!A.get(i).equals(key))
+                // set the current index to current item
+                A.set(index++, A.get(i));
+        }
+        // return index
+        return index;
     }
 }
