@@ -180,4 +180,78 @@ public final class ArrayProblems {
         // return index
         return index;
     }
+
+    /**
+     * This method will calculate the max profit one could
+     * make from buying and selling shares in the same day.
+     * The profit can only be made by buying and then selling.
+     * So the order of the list is the 'time' of the stock prices.
+     *
+     * This is a greedy algorithm
+     *
+     * Time Complexity O(n)
+     * Space Complexity O(1)
+     *
+     * @param prices list of stock prices
+     * @return max profit to be made from these stocks
+     */
+    public static double maxProfit(List<Double> prices) {
+        // init values
+        double profit = 0.0, min = Double.MAX_VALUE;
+
+        // loop over stock prices
+        for (double price : prices) {
+
+            // calculate the max profit each loop
+            // if min is greater that price, (price - min)
+            // will be negative and current profit will
+            // be the max (if stocks go down, will always be 0)
+            profit = Math.max(profit, price - min);
+
+            // determine which is lower, price or min
+            min = Math.min(price, min);
+        }
+
+        // when loop falls off, profit will be max
+        // profit from buying and selling stocks
+        return profit;
+    }
+
+    /**
+     * Variant of stock prices problem
+     *
+     * This method returns the length of the longest
+     * sub array of equal numbers.
+     * Example: the array of {1,1,2,2,2,2,3,3}
+     * would yield the result of 4, bc there are
+     * 4 of the number 2 that would make a sub array
+     *
+     * Time Complexity O(n)
+     * Space Complexity O(1)
+     *
+     * @param numbers list of numbers
+     * @return length of the sub array of equal numbers
+     */
+    public static int longestSubArray(List<Integer> numbers) {
+        // init values (len as 1, because the first number in a
+        // series needs to be counted.  started w/ 0, but was one off)
+        int len = 1, max = 0;
+
+        // loop over the numbers
+        for (int i=0; i<numbers.size()-1; i++) {
+            // check current and next num
+            if (numbers.get(i).equals(numbers.get(i+1)))
+                // increment len if same
+                len++;
+            else
+                // reset len if different
+                len = 1;
+
+            // store the max each iteration
+            max = Math.max(len, max);
+        }
+
+        // return the max count sub array
+        return max;
+    }   
 }
