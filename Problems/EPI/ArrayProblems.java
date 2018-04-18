@@ -253,5 +253,26 @@ public final class ArrayProblems {
 
         // return the max count sub array
         return max;
-    }   
+    }
+
+
+    /**
+     * This method rearranges the list as:
+     * A[0] <= A[1] >= A[2] <= A[3] ...
+     *
+     * Time Complexity: O(n)
+     *
+     * @param A List to rearrange
+     */
+    public static void rearrange(List<Integer> A) {
+        // loop from 2nd item to last
+        for (int i=1; i<A.size(); i++){
+            // when even swap if prior is less than current
+            // when odd swap if prior is greater than current
+            if (((i % 2) == 0 && A.get(i-1) < A.get(i))
+                    || ((i % 2) != 0 && A.get(i-1) > A.get(i)))
+                // swap.
+                Collections.swap(A, i-1, i);
+        }
+    }
 }
