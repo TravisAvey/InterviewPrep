@@ -275,4 +275,51 @@ public final class ArrayProblems {
                 Collections.swap(A, i-1, i);
         }
     }
+
+    /**
+     * This method returns a list of prime numbers up to n
+     * 
+     * Time Complexity: O(n log(log(n)) Same as Sieve of Eratosthenes
+     * 
+     * @param n right bound
+     * @return list of primes up to n
+     */
+    public static List<Integer> getPrimes(int n) {
+        // if less than 2, return an empty list
+        if (n < 2)
+            return new ArrayList<>();
+
+        // get the size of the list:
+        final int size = (int) Math.floor(0.5 * (n-3)) + 1;
+        
+        // init a list
+        List<Integer> primes = new ArrayList<>();
+
+        // add 2
+        primes.add(2);
+
+        // init a list of booleans init all to true
+        List<Boolean> isPrime = new ArrayList<>(Collections.nCopies(size, true));
+
+        // loop over the computed size
+        for (long i=0; i < size; i++) {
+            // if is prime
+            if (isPrime.get((int)i)){
+                // calculate p
+                int p = (((int) i * 2) + 3);
+
+                // add p to primes
+                primes.add(p);
+
+                // sieve from p^2, value = 4i^2 + 12i + 9, where the index
+                // is 2i^2 + 6i + 3 b/c isPrime[i] is 2i + 3
+                for (long j = ((i * i) * 2) + 6 * i + 3; j < size; j += p)
+                    // set j to false, not a prime
+                    isPrime.set((int)j, false);
+            }
+        }
+
+        // return list of primes
+        return primes;
+    }
 }
