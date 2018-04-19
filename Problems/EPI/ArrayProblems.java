@@ -322,4 +322,24 @@ public final class ArrayProblems {
         // return list of primes
         return primes;
     }
+
+
+    /**
+     * This method selects a random subset of a list
+     *
+     * Time Complexity: O(k)
+     *
+     * @param k size of subset
+     * @param A list to get random sampling from
+     */
+    public static void randomSampling(int k, List<Integer> A){
+        // init a new random engine
+        Random random = new Random(LocalTime.now().getSecond());
+        
+        // loop up to k
+        for (int i=0; i<k; i++){
+            // swap current with a random number
+            Collections.swap(A, i, i + random.nextInt(A.size()-i));
+        }
+    }
 }
