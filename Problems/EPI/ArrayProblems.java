@@ -342,4 +342,52 @@ public final class ArrayProblems {
             Collections.swap(A, i, i + random.nextInt(A.size()-i));
         }
     }
+
+    /**
+     * This method generates a random number from a
+     * given list of values in a non-uniform way
+     *
+     * Time Complexity: O(n)
+     *
+     * @param values of numbers
+     * @param probabilities that add up to 1
+     * @return random number from the list of values
+     */
+    public static int nonUniformRandomNumberGenerator(
+            List<Integer> values,
+            List<Double> probabilities) {
+
+        // create a new list of probabilities
+        List<Double> sumOfProbs = new ArrayList<>();
+
+        // loop over the probabilities list
+        for (double p : probabilities) {
+            // add to the new list of probabilities
+            sumOfProbs.add(
+                    // if empty add 0, else add the size -1 + the probability
+                    // from list parameter
+                    (sumOfProbs.isEmpty() ? 0.0
+                    : sumOfProbs.get(sumOfProbs.size() - 1))+ p
+            );
+        }
+
+        // create a new random
+        Random r = new Random();
+        // get the next double
+        final double uniform01 = r.nextDouble();
+        // find the index where the interval lies in
+        int it = Collections.binarySearch(sumOfProbs, uniform01);
+
+        // looking the index of the first element that is greater
+        // than the greater than the key
+        // if binary search returns negative, get the abs value
+        // and return the random number
+        if (it < 0) {
+            final int intervalIdx = Math.abs(it) - 1;
+            return values.get(intervalIdx);
+        // else the interval was >= to 0
+        // return the non uniform random number
+        } else {
+            return values.get(it);
+        }
 }
