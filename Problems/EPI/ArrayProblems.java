@@ -390,4 +390,36 @@ public final class ArrayProblems {
         } else {
             return values.get(it);
         }
+    }
+
+    /**
+     * This method rotates a 2D array (square matrix)
+     * to the right. 
+     * 
+     * Time Complexity: O(n^2)
+     * 
+     * @param matrix 2D Array
+     */
+    public static void rotateMatrix(List<List<Integer>> matrix) {
+        // cache the size of the matrix
+        final int size = matrix.size() - 1;
+        
+        // outer loop: half the matrix size
+        for (int i=0; i < (matrix.size() / 2); i++) {
+            // inner loop: from i to size - i
+            for (int j=i; j < size - i; j++) {
+
+                // perform 4 way swap:
+                int temp1 = matrix.get(size-j).get(i);
+                int temp2 = matrix.get(size-i).get(size-j);
+                int temp3 = matrix.get(j).get(size-i);
+                int temp4 = matrix.get(i).get(j);
+
+                matrix.get(i).set(j, temp1);
+                matrix.get(size-j).set(i, temp2);
+                matrix.get(size-i).set(size-j, temp3);
+                matrix.get(j).set(size-i, temp4);
+            }
+        }
+    }
 }
