@@ -68,4 +68,29 @@ public class StringProblems {
         // return the string
         return sb.toString();
     }
+
+        /**
+     * This method converts a string to an integer
+     * 
+     * Time Complexity O(n)
+     *      where n is the length of the string
+     *      
+     * @param s string to convert
+     * @return converted integer of s
+     */
+    public static int stringToInt(String s) {
+        // init result
+        int result = 0;
+
+        // loop over string, starting at 0 if pos, or 1 if neg
+        for (int i = s.charAt(0) == '-' ? 1 : 0; i < s.length(); i++) {
+            // convert current char to int
+            final int digit = s.charAt(i) - '0';
+            // append digit to end of result
+            result = result * 10 + digit;
+        }
+
+        // return the appropriate value (neg/pos)
+        return s.charAt(0) == '-' ? -result : result;
+    }
 }
