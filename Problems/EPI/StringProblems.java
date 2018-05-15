@@ -93,4 +93,53 @@ public class StringProblems {
         // return the appropriate value (neg/pos)
         return s.charAt(0) == '-' ? -result : result;
     }
+
+    /**
+     * This method converts a numbers base to another base
+     * 
+     * Time Complexity: O(n(1 + log b2 (b1))  --log base b2 (b1)
+     *          where n is length of the number
+     *          
+     * @param num string value of number
+     * @param b1 base of number
+     * @param b2 base to convert to
+     * @return converted string to new base
+     */
+    public static String convertBase(String num, int b1, int b2) {
+        // check if number is negative
+        boolean isNegative = num.startsWith("-");
+        // init number
+        int N = 0;
+        // loop over string, starting at 0/1 if negative or not
+        for (int i= (isNegative ? 1 : 0); i < num.length(); i++) {
+            // multiply N by b1
+            N *= b1;
+            // add to N the next digit
+            N += Character.isDigit(num.charAt(i))
+                    ? num.charAt(i) - '0'
+                    : num.charAt(i) - 'A' + 10;
+        }
+
+        // return the number with a negative sign or not
+        return (isNegative ? "-" : "")
+                + (N == 0 ? "0" : constructFromBase(N, b2));
+
+    }
+
+    /**
+     * Helper method for converting the base of a number
+     * 
+     * @param N number to convert
+     * @param base base to convert to
+     * @return string representation of converted number
+     */
+    private static String constructFromBase(int N, int base) {
+        // if N is 0 return blank string
+        return N == 0 ? ""
+                // else recurse on number dividing by the base
+                // adding the appropriate character
+                : constructFromBase(N/base, base)
+                + (char)(N % base >= 10 ? 'A' + N % base - 10
+                                        : '0' + N % base);
+    }
 }
