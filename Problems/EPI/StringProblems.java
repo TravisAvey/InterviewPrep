@@ -142,4 +142,57 @@ public class StringProblems {
                 + (char)(N % base >= 10 ? 'A' + N % base - 10
                                         : '0' + N % base);
     }
+
+    /**
+     * This method reverses a char array of words:
+     * ram is costly : yltsoc si mar
+     * 
+     * Time Complexity O(n)
+     * Additional space O(1)
+     * 
+     * @param input char array to reverse
+     */
+    public static void reverseWords(char[] input) {
+        // cache length of input
+        int n = input.length;
+        // init start and end to 0
+        int start = 0, end = 0;
+        
+        
+        // while start is less than n
+        while (start < n) {
+            // while start less than end or if current char is a space
+            while (start < end || start < n && input[start] == ' ') {
+                // increment start
+                ++start;
+            }
+            // while end is less than start, or if current char isn't a space
+            while (end < start || end < n && input[end] != ' ') {
+                // increment end
+                ++end;
+            }
+            // we now have a word from start to end-1
+            // call helper method to reverse the word
+            reverse(input, start, end-1);
+        }
+    }
+
+    /**
+     * This is a helper method that reverses a word 
+     * 
+     * Time Complexity O(n)
+     * 
+     * @param array char array containing word to reverse
+     * @param start start index of word
+     * @param end end index of word
+     */
+    private static void reverse(char[] array, int start, int end) {
+        // while start index is less than end index
+        while (start < end) {
+            // exchange start and end chars
+            char temp = array[start];
+            array[start++] = array[end];
+            array[end--] = temp;
+        }
+    }
 }
