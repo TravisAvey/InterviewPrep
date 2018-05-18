@@ -3,7 +3,10 @@
 
 int main(int argc, char *argv[]) {
 
-    std::cout << "Hello\n";
-    
+    HashTable<int, std::string> hash;
+
+    hash.put(0, "bob");
+    hash.put(1, "Jerome");
+
     return 0;
 }

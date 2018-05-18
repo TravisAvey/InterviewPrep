@@ -8,9 +8,10 @@ class Entry {
 private:
     K mKey;
     V mValue;
-    Entry *next;
 
 public:
+
+    Entry *next;
     Entry(K, V);
     std::string toString() const;
 };
@@ -18,8 +19,10 @@ public:
 template <class K, class V>
 class HashTable {
 private:
-    const int SIZE = 4;
+    const int SIZE = 16;
     Entry<K, V> entries[];
+
+    int getHash(K);
 public:
     HashTable();
     void put(K, V);
@@ -29,15 +32,31 @@ public:
 template <class K, class V>
 HashTable<K, V>::HashTable() {
     entries = new Entry<K, V>[SIZE];
+
+    for (int i=0; i<SIZE; i++)
+        entries[i] = nullptr;
 }
 
 template <class K, class V>
 void HashTable<K, V>::put(K key, V value) {
-    // get hash
-    // TODO: create get hash method
-    int hash = 0;
-    Entry<K, V> *entry = new Entry<K, V>();
+    int hash = getHash(key);
+    Entry<K, V> *entry = new Entry<K, V>(key, value);
+    if (!entries[hash]) {
+        entries[hash] = entry;
+    } else {
+        Entry<K, V> temp = entries[hash];
 
+        while (temp.next != null)
+            temp = temp.next;
+        
+        temp.next = entry;
+    }
+}
+
+template <class K, class V>
+int HashTable<K, V>::getHash(K key) {
+    size_t hash = std::hash<K>{key};
+    return (int) hash % SIZE;
 }
 
 template <class K, class V>
