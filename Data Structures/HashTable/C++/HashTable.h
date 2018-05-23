@@ -4,68 +4,62 @@
 #include <string>
 #include <functional>
 
+template <class K, class V>
+class Node {
+private:
+    K key;
+    V value;
+public:
+    Node(K key, V value) {
+        this->key = key;
+        this->value = value;
+    }
+
+    K getKey() {
+        return key;
+    }
+
+    V getValue() {
+        return value;
+    }
+};
 
 template <class K, class V>
 class HashTable {
 private:
-
-
-    struct Entry {
-        K key;
-        V value;
-        Entry *next;
-    };
-
-//    Entry *next;
+    Node<K, V> **entries;
     const int SIZE = 16;
-    Entry *entries;
-
-    int getHash(K);
 public:
-    HashTable();
-    void put(K, V);
 
-};
-
-template <class K, class V>
-HashTable<K, V>::HashTable() {
-    entries = new Entry[SIZE];
-
-    for (int i=0; i<SIZE; i++)
-        // no match for operator= ?
-        entries[i] = nullptr;
-}
-
-template <class K, class V>
-void HashTable<K, V>::put(K key, V value) {
-    int hash = getHash(key);
-    Entry *entry = new Entry;
-    entry->key = key;
-    entry->value = value;
-    entry->next = nullptr;
-
-    if (entries[hash].next == nullptr) {
-        entries[hash] = *entry;
-    } else {
-
-        // I think this should be set from entries[hash] .. ?
-        Entry temp = entry[hash];
-
-        while (temp.next != nullptr)
-            // Entry and Entry * are not compatible... ?
-            temp = temp.next;
-
-        temp.next = entry;
+    HashTable() {
+        entries = new Node<K, V>*[SIZE];
+        for (int i=0; i<SIZE; i++)
+            entries[i] = nullptr;
     }
-}
 
-template <class K, class V>
-int HashTable<K, V>::getHash(K key) {
-    std::hash<K> hash;
-    size_t keyHash = hash(key);
-    return static_cast<int>(keyHash % SIZE);
-}
+    V get(K key) {
+        int hash = (key % SIZE);
 
+        while (entries[hash] != nullptr && entries[hash]->getKey() != key) {
+            hash = (hash + 1) % SIZE;
+        }
+
+        if (entries[hash] == nullptr)
+            return nullptr;
+        else
+            return entries[hash]->getValue();
+    }
+
+    void put(K key, V value) {
+        int hash = (key % SIZE);
+
+        while (entries[hash] != nullptr && entries[hash]->getKey() != key)
+            hash = (hash + 1) % SIZE;
+        if (entries[hash] != nullptr)
+            delete entries[hash];
+        entries[hash] = new Node<K, V>(key, value);
+    }
+};
 
 
 #endif
