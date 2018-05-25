@@ -195,4 +195,52 @@ public class StringProblems {
             array[end--] = temp;
         }
     }
+
+    /**
+     * This method converts a roman numeral to an integer
+     * 
+     * Main algorithm:
+     * as looping down from 2nd to last, we are checking
+     * the next if value is greater, as in IX or IV
+     * Firt iteration we have stored X or V, next
+     * time through loop, I is less so we subtract that
+     * value ending with correct value of either 9 or 4
+     * in this case
+     * 
+     * Time Complexity O(n)
+     * 
+     * @param roman string : roman numeral
+     * @return converted roman numeral
+     */
+    public static int romanToInteger(String roman) {
+        
+        // create a Hash Map of values for each roman numeral integer
+        Map<Character, Integer> map = new HashMap<Character, Integer>() {
+            {
+                put('I', 1);
+                put('V', 5);
+                put('X', 10);
+                put('C', 50);
+                put('M', 100);
+                put('D', 500);
+                put('L', 1000);
+            }
+        };
+
+        // get the last letter value
+        int sum = map.get(roman.charAt(roman.length()-1));
+
+        // loop over from 2nd to last to beginning
+        for (int i=roman.length()-2; i>=0; i--) {
+            // if current value is less than next
+            if (roman.charAt(i) < roman.charAt(i+1))
+                // subtract value from sum
+                sum -= map.get(roman.charAt(i));
+            else
+                // otherwise, add the current value
+                sum += map.get(roman.charAt(i));
+        }
+        // finally value of the roman numeral
+        return sum;
+    }
 }
